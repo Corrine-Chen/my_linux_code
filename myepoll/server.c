@@ -136,15 +136,19 @@ int main(int argc,char* argv[])
 					    		array[i].data.fd,&array[i]);
 						    	}
 							}else if(array[i].events & EPOLLOUT){//write ready写事件就绪
+								printf("hello\n");
 						    	const char* msg = "HTTP/1.0 OK 200\r\n\r\n\
-							    	<html><ht>hello workd</ht></html>";//向网页输出hello worl
+							    	<html><h1>hello workd</h1></html>" ;
 						    	array[i].events = EPOLLIN;
+								write(array[i].data.fd,msg,strlen(msg));
+								close(array[i].data.fd);
 						    	epoll_ctl(ep_fd,EPOLL_CTL_MOD,\
 										  array[i].data.fd,&array[i]);
 								    }
 				    		}else{//other ready
 						}
 					}
+
 				}
 		}
 	}
